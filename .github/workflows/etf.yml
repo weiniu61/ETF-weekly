@@ -1,31 +1,32 @@
 name: ETF Weekly Report
 
 on:
+  # 每周四自动运行
   schedule:
-    # 每周四 21:00 UTC
     - cron: "0 21 * * 4"
 
+  # 允许手动测试运行
   workflow_dispatch:
 
 jobs:
-  run-etf:
+  etf-check:
 
     runs-on: ubuntu-latest
 
     steps:
 
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: 下载代码
+        uses: actions/checkout@v4
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.x"
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
 
-    - name: Install packages
-      run: |
-        pip install yfinance pandas
+      - name: 安装需要的软件包
+        run: |
+          pip install yfinance pandas
 
-    - name: Run ETF check
-      run: |
-        python etf_check.py
+      - name: 运行 ETF 检查
+        run: |
+          python etf_check.py
