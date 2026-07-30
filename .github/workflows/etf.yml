@@ -1,0 +1,31 @@
+name: ETF Weekly Report
+
+on:
+  schedule:
+    # 每周四 21:00 UTC
+    - cron: "0 21 * * 4"
+
+  workflow_dispatch:
+
+jobs:
+  run-etf:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+
+    - name: Install packages
+      run: |
+        pip install yfinance pandas
+
+    - name: Run ETF check
+      run: |
+        python etf_check.py
